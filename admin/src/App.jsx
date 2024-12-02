@@ -1,44 +1,28 @@
 import React from "react";
+import Header from "./components/Header";
+import { Routes, Route } from "react-router-dom"; // Import both Routes and Route from react-router-dom
+import Home from "./pages/Home";
+import Products from "./pages/Products";
+import Sidebar from "./components/Sidebar";
+import NotFound from "./pages/NotFound";
+import Banner from "./pages/Banner";
 
 const App = () => {
-  const routes = [
-    { name: "Categories", path: "/api/v1/categories" },
-    { name: "Products", path: "/api/v1/products" },
-    { name: "Users", path: "/api/v1/users" },
-    { name: "Orders", path: "/api/v1/orders" },
-    { name: "Banners", path: "/api/v1/banners" },
-    { name: "Brands", path: "/api/v1/brands" },
-    { name: "Collections", path: "/api/v1/collections" },
-  ];
-
   return (
-    <>
-      <div className="min-h-screen flex flex-col bg-gray-100">
-        <main className="flex-grow p-4">
-          <p className="text-gray-700 mb-4">
-            Admin Panel will be made after backend is ready.
-          </p>
-          <p className="text-gray-700 mb-2">
-            After running the backend server, you can access the following
-            routes:
-          </p>
-          <ul className="list-disc pl-5 text-gray-700">
-            {routes.map((route) => (
-              <li key={route.path}>
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={`http://localhost:3000${route.path}`}
-                  className="text-blue-500 hover:underline"
-                >
-                  {route.name}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </main>
+    <div className="h-screen w-[100vw]  mx-auto">
+      <Header />
+      <div className="flex ">
+        <Sidebar />
+        <Routes>
+          {" "}
+          {/* Wrap all routes inside the Routes component */}
+          <Route path="/" element={<Home />} />
+          <Route path="/banners" element={<Banner />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </div>
-    </>
+    </div>
   );
 };
 
