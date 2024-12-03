@@ -5,9 +5,10 @@ import Home from "./pages/Home";
 import Products from "./pages/Products";
 import Sidebar from "./components/Sidebar";
 import NotFound from "./pages/NotFound";
-import Banner from "./pages/Banner";
 import AddProductPage from "./pages/AddProductPage";
 import { Toaster } from "react-hot-toast";
+import Banner from "./pages/banners/Banner";
+import Categories from "./pages/categories/Categories";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/banners" element={<Banner />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/categories" element={<Categories />} />
           <Route path="/add-product" element={<AddProductPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
