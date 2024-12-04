@@ -1,27 +1,27 @@
 import { useState, useEffect } from "react";
-import toast from "react-hot-toast";
+import toast from "react-hot-toast"; // Import react-hot-toast
 
-const useCategories = () => {
-  const [categories, setCategories] = useState([]);
+const useBanners = () => {
+  const [banners, setBanners] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [newCategory, setNewCategory] = useState({
+  const [newBanner, setNewBanner] = useState({
     name: "",
-    image: "", // URL or path of the image
+    image: "", // Keep the URL or path of the image
     link: "",
     isActive: false,
   });
   const [imageFile, setImageFile] = useState(null); // Separate state for the image file
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchBanners = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/categories`
+          `${import.meta.env.VITE_API_BASE_URL}/banners`
         );
-        if (!response.ok) throw new Error("Error fetching categories.");
+        if (!response.ok) throw new Error("Error fetching banners.");
         const data = await response.json();
-        setCategories(data);
+        setBanners(data);
         setLoading(false);
       } catch (err) {
         setError(err.message);
@@ -29,96 +29,95 @@ const useCategories = () => {
       }
     };
 
-    fetchCategories();
+    fetchBanners();
   }, []);
 
-  const handleCreateCategory = async (formData) => {
+  const handleCreateBanner = async (formData) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/categories`, {
-        method: "POST",
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/banners`, {
+        method: 'POST',
         body: formData,
       });
       const data = await response.json();
       if (response.ok) {
-        setCategories((prevCategories) => [...prevCategories, data]);
-        setNewCategory({ name: "", image: "", link: "", isActive: false });
-        setImageFile(null);
-        toast.success("Category created successfully!");
+        setBanners((prevBanners) => [...prevBanners, data]); // Add new banner to the list
+        setNewBanner({ name: '', image: '', link: '', isActive: false }); // Reset form
+        setImageFile(null); // Clear the image file input
+        toast.success('Banner created successfully!'); // Success toast
       } else {
-        console.error("Failed to create category", data);
-        setError(data.message || "Failed to create category");
-        toast.error("Failed to create category");
+        console.error('Failed to create banner', data);
+        setError(data.message || "Failed to create banner");
+        toast.error('Failed to create banner'); // Error toast
       }
     } catch (error) {
-      console.error("Error creating category:", error);
-      setError("Error creating category");
-      toast.error("Error creating category");
+      console.error('Error creating banner:', error);
+      setError('Error creating banner');
+      toast.error('Error creating banner'); // Error toast
     }
   };
 
-  const handleUpdateCategory = async (id) => {
+  const handleUpdateBanner = async (id) => {
     try {
-      const updatedCategoryData = { ...newCategory };
-      const formData = new FormData();
-      formData.append("name", updatedCategoryData.name);
-      formData.append("link", updatedCategoryData.link);
-      formData.append("isActive", updatedCategoryData.isActive);
+      const updatedBannerData = { ...newBanner };
+      const formData = new FormData(); // Use FormData for the update to handle files
+      formData.append("name", updatedBannerData.name);
+      formData.append("link", updatedBannerData.link);
+      formData.append("isActive", updatedBannerData.isActive);
       if (imageFile) {
-        formData.append("image", imageFile);
+        formData.append("image", imageFile); // Append the image if it's updated
       }
 
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/categories/${id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/banners/${id}`,
         {
           method: "PUT",
           body: formData,
         }
       );
 
-      if (!response.ok) throw new Error("Error updating category.");
-      const updatedCategory = await response.json();
-      setCategories((prev) =>
-        prev.map((category) =>
-          category._id === id ? updatedCategory : category
-        )
+      if (!response.ok) throw new Error("Error updating banner.");
+      const updatedBanner = await response.json();
+      setBanners((prev) =>
+        prev.map((banner) => (banner._id === id ? updatedBanner : banner))
       );
-      setNewCategory({ name: "", image: "", link: "", isActive: false });
-      setImageFile(null);
-      toast.success("Category updated successfully!");
+      setNewBanner({ name: '', image: '', link: '', isActive: false }); // Reset form
+      setImageFile(null); // Reset image file
+      toast.success('Banner updated successfully!'); // Success toast
     } catch (err) {
       setError(err.message);
-      toast.error("Error updating category");
+      toast.error('Error updating banner'); // Error toast
     }
   };
 
-  const handleDeleteCategory = async (id) => {
+  const handleDeleteBanner = async (id) => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/categories/${id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/banners/${id}`,
         { method: "DELETE" }
       );
-      if (!response.ok) throw new Error("Error deleting category");
-      setCategories(categories.filter((category) => category._id !== id));
-      toast.success("Category deleted successfully!");
+      console.log("Response:", response); // Log response
+      if (!response.ok) throw new Error("Error deleting banner");
+      setBanners(banners.filter((banner) => banner._id !== id)); // Remove banner from the list
+      toast.success('Banner deleted successfully!'); // Success toast
     } catch (err) {
-      console.error("Delete Error:", err);
-      setError("Error deleting category");
-      toast.error("Error deleting category");
+      console.error("Delete Error:", err); // Log the error
+      setError('Error deleting banner');
+      toast.error('Error deleting banner'); // Error toast
     }
   };
 
   return {
-    categories,
+    banners,
     loading,
     error,
-    newCategory,
-    setNewCategory,
+    newBanner,
+    setNewBanner,
     imageFile,
-    setImageFile,
-    handleCreateCategory,
-    handleUpdateCategory,
-    handleDeleteCategory,
+    setImageFile, // Expose setImageFile for handling file input
+    handleCreateBanner,
+    handleUpdateBanner,
+    handleDeleteBanner,
   };
 };
 
-export default useCategories;
+export default useBanners;

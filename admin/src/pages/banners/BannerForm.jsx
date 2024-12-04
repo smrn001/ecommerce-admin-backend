@@ -32,7 +32,6 @@ const BannerForm = ({
       setIsEditMode(false);
     } else {
       await handleCreateBanner(formData);
-      toast.success("Banner created successfully!");
     }
 
     setImageFile(null);
@@ -40,7 +39,7 @@ const BannerForm = ({
   };
 
   return (
-    <div className="bg-white p-6 border w-full md:w-1/3">
+    <div className="bg-white p-6 border w-full md:w-1/3 h-min">
       <h2 className="text-2xl font-semibold mb-4 text-gray-800">
         {isEditMode ? "Edit Banner" : "Create a New Banner"}
       </h2>
@@ -62,7 +61,7 @@ const BannerForm = ({
             <img
               src={imagePreview}
               alt="Preview"
-              className="w-60 h-20 object-cover rounded-sm"
+              className="w-60 h-20 object-cover rounded-"
             />
           </div>
         )}

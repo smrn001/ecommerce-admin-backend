@@ -1,42 +1,40 @@
 import React, { useState } from "react";
-import useCategories from "../../hooks/useCategories"; // Hook for category operations
+import useBanners from "../../hooks/useBanners";
 import toast, { Toaster } from "react-hot-toast";
-import CategoryForm from "../categories/CategoryForm";
-import CategoryList from "../categories/CategoryList";
+import BannerForm from "./BannerForm";
+import BannerList from "./BannerList";
 
-
-const Category = () => {
+const Banner = () => {
   const {
-    categories,
+    banners,
     loading,
     error,
-    newCategory,
-    setNewCategory,
-    handleCreateCategory,
-    handleUpdateCategory,
-    handleDeleteCategory,
-  } = useCategories();
+    newBanner,
+    setNewBanner,
+    handleCreateBanner,
+    handleUpdateBanner,
+    handleDeleteBanner,
+  } = useBanners();
 
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const handleEditCategory = (category) => {
-    setNewCategory({
-      _id: category._id,
-      name: category.name,
-      link: category.link,
-      isActive: category.isActive,
+  const handleEditBanner = (banner) => {
+    setNewBanner({
+      _id: banner._id,
+      name: banner.name,
+      link: banner.link,
+      isActive: banner.isActive,
     });
     setImageFile(null);
     setIsEditMode(true);
-    setImagePreview(category.image);
+    setImagePreview(banner.image);
   };
 
-  const confirmDeleteCategory = (id) => {
-    if (window.confirm("Are you sure you want to delete this category?")) {
-      handleDeleteCategory(id);
-      toast.error("Category deleted!");
+  const confirmDeleteBanner = (id) => {
+    if (window.confirm("Are you sure you want to delete this banner?")) {
+      handleDeleteBanner(id);
     }
   };
 
@@ -44,7 +42,7 @@ const Category = () => {
     <div className="container mx-auto p-6 max-w-screen-xl">
       <Toaster />
       <h1 className="text-4xl font-semibold text-center mb-8 text-black">
-        Category Management
+        Banner Management
       </h1>
       {loading ? (
         <p className="text-center text-lg text-gray-600">Loading...</p>
@@ -52,22 +50,22 @@ const Category = () => {
         <p className="text-center text-red-500">{error}</p>
       ) : (
         <div className="flex flex-col md:flex-row gap-8 justify-between">
-          <CategoryForm
+          <BannerForm
             isEditMode={isEditMode}
             setIsEditMode={setIsEditMode}
-            newCategory={newCategory}
-            setNewCategory={setNewCategory}
+            newBanner={newBanner}
+            setNewBanner={setNewBanner}
             imageFile={imageFile}
             setImageFile={setImageFile}
             imagePreview={imagePreview}
             setImagePreview={setImagePreview}
-            handleCreateCategory={handleCreateCategory}
-            handleUpdateCategory={handleUpdateCategory}
+            handleCreateBanner={handleCreateBanner}
+            handleUpdateBanner={handleUpdateBanner}
           />
-          <CategoryList
-            categories={categories}
-            onEdit={handleEditCategory}
-            onDelete={confirmDeleteCategory}
+          <BannerList
+            banners={banners}
+            onEdit={handleEditBanner}
+            onDelete={confirmDeleteBanner}
           />
         </div>
       )}
@@ -75,4 +73,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default Banner;
