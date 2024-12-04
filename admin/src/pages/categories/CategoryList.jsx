@@ -1,60 +1,62 @@
 import React from "react";
-import { Edit3, Trash } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 
 const CategoryList = ({ categories, onEdit, onDelete }) => (
-  <div className="bg-white p-8 border w-full md:w-2/3 max-h-[600px] overflow-y-auto">
-    <h2 className="text-2xl font-semibold mb-6 text-gray-800">
-      All categories
-    </h2>
-    <table className="table-auto w-full border-collapse">
-      <thead>
-        <tr className="bg-gray-100">
-          <th className="border px-6 py-3 text-left text-sm font-semibold">
-            Name
-          </th>
-          <th className="border px-6 py-3 text-left text-sm font-semibold">
-            Image
-          </th>
-          <th className="border px-6 py-3 text-left text-sm font-semibold">
-            Active
-          </th>
-          <th className="border px-6 py-3 text-left text-sm font-semibold">
-            Actions
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {categories.map((category) => (
-          <tr key={category._id} className="hover:bg-gray-50">
-            <td className="border px-6 py-3">{category.name}</td>
-            <td className="border px-6 py-3">
-              <img
-                src={category.image}
-                alt={category.name}
-                className="w-60 h-20 object-cover rounded-sm"
-              />
-            </td>
-            <td className="border px-6 py-3">
-              {category.isActive ? "Yes" : "No"}
-            </td>
-            <td className="border justify-between px-6 py-3 space-x-2 flex items-center">
-              <button
-                onClick={() => onEdit(category)}
-                className="bg-yellow-500 text-white p-2 rounded-lg hover:bg-yellow-600 transition duration-200 flex items-center gap-2"
-              >
-                <Edit3 size={16} />
-              </button>
-              <button
-                onClick={() => onDelete(category._id)}
-                className="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 transition duration-200 flex items-center gap-2"
-              >
-                <Trash size={16} />
-              </button>
-            </td>
+  <div className="flex-1 flex flex-col gap-5 p-5 md:px-10 border h-min bg-white">
+    <h2 className="text-2xl font-semibold mb-4 text-gray-800">All Banners</h2>
+    <div className="overflow-x-auto">
+      <table className="w-full border-separate border-spacing-y-2">
+        <thead>
+          <tr className="bg-gray-100">
+            <th className="border-b px-4 py-2 text-sm font-medium text-gray-600">
+              Name
+            </th>
+            <th className="border-b px-4 py-2 text-sm font-medium text-gray-600">
+              Image
+            </th>
+           
+            <th className="border-b px-4 py-2 text-sm font-medium text-gray-600">
+              Actions
+            </th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {categories.map((category) => (
+            <tr key={category._id} className="hover:bg-gray-50">
+              <td className="border-b px-4 py-2 text-sm text-gray-800">
+                {category.name}
+              </td>
+              <td className="border-b px-4 py-2">
+                <img
+                  src={category.image}
+                  alt={category.name}
+                  className="w-full max-w-[200px]  h-auto object-cover rounded-sm shadow-sm"
+                />
+              </td>
+              <td className="border-b px-4 py-2 text-sm text-gray-800">
+                {category.isActive ? "Yes" : "No"}
+              </td>
+              <td className="border-b px-4 py-3">
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => onEdit(category)}
+                    className="bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full p-1"
+                  >
+                    <Pencil size={14} />
+                  </button>
+                  <button
+                    onClick={() => onDelete(category._id)}
+                    className="bg-red-100 hover:bg-red-200 text-red-600 rounded-full p-1"
+                  >
+                    <Trash2 size={14} />
+                  </button>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   </div>
 );
 

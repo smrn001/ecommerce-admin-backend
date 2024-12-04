@@ -39,29 +39,29 @@ const BannerForm = ({
   };
 
   return (
-    <div className="bg-white p-6 border w-full md:w-1/3 h-min">
+    <div className="bg-white p-6 border w-full md:w-1/3 h-min flex flex-col justify-center items-center">
       <h2 className="text-2xl font-semibold mb-4 text-gray-800">
         {isEditMode ? "Edit Banner" : "Create a New Banner"}
       </h2>
-      <div className="space-y-4">
+      <div className="space-y-4 flex flex-col items-left justify-between">
         <input
           type="text"
           placeholder="Banner Name"
           value={newBanner.name}
           onChange={(e) => setNewBanner({ ...newBanner, name: e.target.value })}
-          className="p-4 border border-gray-300 rounded-lg w-full focus:ring-2 focus:ring-blue-500"
+          className="p-4 border border-gray-300 w-full focus:ring-2 focus:ring-blue-500"
         />
         <input
           type="file"
           onChange={handleFileChange}
-          className="p-4 border border-gray-300 rounded-lg w-full focus:ring-2 focus:ring-blue-500"
+          className="p-4 border border-gray-300  w-full focus:ring-2 focus:ring-blue-500"
         />
         {imagePreview && (
           <div className="mt-4 flex justify-center">
             <img
               src={imagePreview}
               alt="Preview"
-              className="w-60 h-20 object-cover rounded-"
+              className="w-60 h-20 object-cover "
             />
           </div>
         )}
@@ -70,7 +70,7 @@ const BannerForm = ({
           placeholder="Link"
           value={newBanner.link}
           onChange={(e) => setNewBanner({ ...newBanner, link: e.target.value })}
-          className="p-4 border border-gray-300 rounded-lg w-full focus:ring-2 focus:ring-blue-500"
+          className="p-4 border border-gray-300 r w-full focus:ring-2 focus:ring-blue-500"
         />
         <div className="flex items-center">
           <input
@@ -85,7 +85,7 @@ const BannerForm = ({
         </div>
         <button
           onClick={handleSubmit}
-          className="bg-blue-600 text-white p-4 rounded-lg w-full hover:bg-blue-700 transition duration-200"
+          className="bg-blue-600 text-white p-4   hover:bg-blue-700 transition duration-200"
         >
           {isEditMode ? "Update Banner" : "Create Banner"}
         </button>

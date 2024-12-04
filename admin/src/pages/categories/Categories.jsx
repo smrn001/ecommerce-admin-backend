@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
-import useCategories from "../../hooks/useCategories";
+import { Toaster } from "react-hot-toast";
+import useCategories from "../../hooks/useCategories"; // Corrected hook call
 import CategoryForm from "./CategoryForm";
 import CategoryList from "./CategoryList";
 
@@ -11,31 +11,31 @@ const Categories = () => {
     error,
     newCategory,
     setNewCategory,
+    imageFile,
+    setImageFile,
     handleCreateCategory,
     handleUpdateCategory,
     handleDeleteCategory,
-  } = useCategories();
+  } = useCategories(); // Correct hook invocation
 
-  const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const handleEditCategory = (categories) => {
+  const handleEditCategory = (category) => {
     setNewCategory({
-      _id: categories._id,
-      name: categories.name,
-      link: categories.link,
-      isActive: categories.isActive,
+      // Fixed to use setNewCategory
+      _id: category._id,
+      name: category.name,
+      image: category.image, // Added image field for consistency
     });
     setImageFile(null);
     setIsEditMode(true);
-    setImagePreview(categories.image);
+    setImagePreview(category.image);
   };
 
   const confirmDeleteCategory = (id) => {
     if (window.confirm("Are you sure you want to delete this category?")) {
       handleDeleteCategory(id);
-      toast.error("category deleted!");
     }
   };
 
@@ -43,7 +43,7 @@ const Categories = () => {
     <div className="container mx-auto p-6 max-w-screen-xl">
       <Toaster />
       <h1 className="text-4xl font-semibold text-center mb-8 text-black">
-        Category Management
+        Category Management {/* Updated heading */}
       </h1>
       {loading ? (
         <p className="text-center text-lg text-gray-600">Loading...</p>

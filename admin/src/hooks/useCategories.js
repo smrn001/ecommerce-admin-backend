@@ -7,17 +7,13 @@ const useCategories = () => {
   const [error, setError] = useState("");
   const [newCategory, setNewCategory] = useState({
     name: "",
-    image: "",
-    colour: "",
-    icon: "",
+    image: "", // Keep the URL or path of the image
   });
-  const [imageFile, setImageFile] = useState(null);
+  const [imageFile, setImageFile] = useState(null); // Separate state for the image file
 
-  // Fetch categories
+  // Fetch categories when component mounts
   useEffect(() => {
     const fetchCategories = async () => {
-      setLoading(true);
-      setError("");
       try {
         const response = await fetch(
           `${import.meta.env.VITE_API_BASE_URL}/categories`
@@ -25,10 +21,9 @@ const useCategories = () => {
         if (!response.ok) throw new Error("Error fetching categories.");
         const data = await response.json();
         setCategories(data);
+        setLoading(false);
       } catch (err) {
         setError(err.message);
-        toast.error(err.message);
-      } finally {
         setLoading(false);
       }
     };
@@ -37,15 +32,8 @@ const useCategories = () => {
   }, []);
 
   // Handle category creation
-  const handleCreateCategory = async () => {
-    setError("");
+  const handleCreateCategory = async (formData) => {
     try {
-      const formData = new FormData();
-      formData.append("name", newCategory.name);
-      formData.append("colour", newCategory.colour);
-      formData.append("icon", newCategory.icon);
-      if (imageFile) formData.append("image", imageFile);
-
       const response = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/categories`,
         {
@@ -53,26 +41,30 @@ const useCategories = () => {
           body: formData,
         }
       );
-      if (!response.ok) throw new Error("Failed to create category.");
       const data = await response.json();
-      setCategories((prev) => [...prev, data]);
-      setNewCategory({ name: "", image: "", colour: "", icon: "" });
-      setImageFile(null);
-      toast.success("Category created successfully!");
-    } catch (err) {
-      setError(err.message);
-      toast.error(err.message);
+      if (response.ok) {
+        setCategories((prevCategories) => [...prevCategories, data]);
+        setNewCategory({ name: "", image: "" });
+        setImageFile(null);
+        toast.success("Category created successfully!");
+      } else {
+        console.error("Failed to create category", data);
+        setError(data.message || "Failed to create category");
+        toast.error("Failed to create category");
+      }
+    } catch (error) {
+      console.error("Error creating category:", error);
+      setError("Error creating category");
+      toast.error("Error creating category");
     }
   };
 
   // Handle category update
   const handleUpdateCategory = async (id) => {
-    setError("");
     try {
+      const updatedCategoryData = { ...newCategory };
       const formData = new FormData();
-      formData.append("name", newCategory.name);
-      formData.append("colour", newCategory.colour);
-      formData.append("icon", newCategory.icon);
+      formData.append("name", updatedCategoryData.name);
       if (imageFile) formData.append("image", imageFile);
 
       const response = await fetch(
@@ -82,34 +74,37 @@ const useCategories = () => {
           body: formData,
         }
       );
+
       if (!response.ok) throw new Error("Error updating category.");
       const updatedCategory = await response.json();
       setCategories((prev) =>
-        prev.map((cat) => (cat._id === id ? updatedCategory : cat))
+        prev.map((category) =>
+          category._id === id ? updatedCategory : category
+        )
       );
-      setNewCategory({ name: "", image: "", colour: "", icon: "" });
-      setImageFile(null);
+      setNewCategory((prev) => ({ ...prev, image: updatedCategory.image })); // Update image URL
+      setImageFile(null); // Reset image file
       toast.success("Category updated successfully!");
     } catch (err) {
       setError(err.message);
-      toast.error(err.message);
+      toast.error("Error updating category");
     }
   };
 
   // Handle category deletion
   const handleDeleteCategory = async (id) => {
-    setError("");
     try {
       const response = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/categories/${id}`,
         { method: "DELETE" }
       );
-      if (!response.ok) throw new Error("Error deleting category.");
-      setCategories((prev) => prev.filter((cat) => cat._id !== id));
+      if (!response.ok) throw new Error("Error deleting category");
+      setCategories(categories.filter((category) => category._id !== id));
       toast.success("Category deleted successfully!");
     } catch (err) {
-      setError(err.message);
-      toast.error(err.message);
+      console.error("Delete Error:", err);
+      setError("Error deleting category");
+      toast.error("Error deleting category");
     }
   };
 
