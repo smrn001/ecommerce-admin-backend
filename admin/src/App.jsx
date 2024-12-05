@@ -10,6 +10,7 @@ import Categories from "./pages/categories/Categories";
 import Products from "./pages/products/Products";
 import AddProductPage from "./pages/products/AddProductPage";
 import Brands from "./pages/brands/Brands";
+import Admin from "./pages/admins/Admin";
 
 const App = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -62,9 +63,10 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/banners" element={<Banner />} />
             <Route path="/products" element={<Products />} />
-            <Route path="brands" element={<Brands/>}/>
+            <Route path="brands" element={<Brands />} />
             <Route path="/categories" element={<Categories />} />
             <Route path="/add-product" element={<AddProductPage />} />
+            <Route path="/admins" element={<Admin />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

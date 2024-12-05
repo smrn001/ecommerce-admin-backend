@@ -32,7 +32,7 @@ const BrandList = ({ brands, onEdit, onDelete }) => (
               <td className="border-b px-4 py-2 text-sm text-gray-800">
                 {brand.name}
               </td>
-              <td className="border-b px-4 py-2 text-sm text-gray-800">
+              <td className="border-b px-4 py-2 text-sm text-gray-800 text-center">
                 {brand.description}
               </td>
               <td className="border-b px-4 py-2 flex justify-center">

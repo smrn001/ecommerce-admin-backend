@@ -11,6 +11,7 @@ const orderRouter = require("./routers/orders");
 const bannerRouter = require("./routers/banners");
 const brandRouter = require("./routers/brands");
 const collectionRouter = require("./routers/collections");
+const adminRouter = require("./routers/admins");
 
 const api = process.env.API_URL || "/api";
 
@@ -22,6 +23,7 @@ app.use(morgan("tiny"));
 
 // Routers
 app.use(`${api}/categories`, categoryRouter);
+app.use(`${api}/admins`, adminRouter);
 app.use(`${api}/products`, productRouter);
 app.use(`${api}/users`, userRouter);
 app.use(`${api}/orders`, orderRouter);
