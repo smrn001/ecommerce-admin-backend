@@ -1,103 +1,43 @@
 const express = require("express");
 const router = express.Router();
-const Product = require("../models/product");
+const upload = require("../middlewares/upload");
+const {
+  createProduct,
+  getProductById,
+  getAllProducts,
+  updateProduct,
+  deleteProduct,
+} = require("../controllers/productController");
 
-// Fetch all products
-router.get(`/`, async (req, res) => {
-  try {
-    const products = await Product.find().populate("category"); // Populate category details
-    res.status(200).json(products);
-  } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
+// Middleware to validate product data
+const validateProductData = (req, res, next) => {
+  const { name, description, brand, price, category } = req.body;
+  if (!name || !description || !brand || !price || !category) {
+    return res
+      .status(400)
+      .json({ success: false, message: "All fields are required" });
   }
-});
+  next();
+};
 
-// Fetch a single product by ID
-router.get(`/:id`, async (req, res) => {
-  try {
-    const product = await Product.findById(req.params.id).populate("category"); // Populate category details
-    if (!product) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Product not found" });
-    }
-    res.status(200).json(product);
-  } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
-  }
-});
+// Create a new product
+router.post("/", upload.array("images", 5), validateProductData, createProduct); // Limit to 5 images
 
-// Add a new product
-router.post(`/`, async (req, res) => {
-  try {
-    const newProduct = new Product({
-      name: req.body.name,
-      description: req.body.description,
-      richDescription: req.body.richDescription,
-      image: req.body.image,
-      images: req.body.images,
-      brand: req.body.brand,
-      price: req.body.price,
-      category: req.body.category,
-      countInStock: req.body.countInStock,
-      rating: req.body.rating,
-      isFeatured: req.body.isFeatured,
-    });
+// Get all products
+router.get("/", getAllProducts);
 
-    const savedProduct = await newProduct.save(); // Save to MongoDB
-    res.status(201).json(savedProduct);
-  } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
-  }
-});
+// Get a product by its ID
+router.get("/:id", getProductById);
 
-// Update a product
-router.put(`/:id`, async (req, res) => {
-  try {
-    const updatedProduct = await Product.findByIdAndUpdate(
-      req.params.id,
-      {
-        name: req.body.name,
-        description: req.body.description,
-        richDescription: req.body.richDescription,
-        image: req.body.image,
-        images: req.body.images,
-        brand: req.body.brand,
-        price: req.body.price,
-        category: req.body.category,
-        countInStock: req.body.countInStock,
-        rating: req.body.rating,
-        isFeatured: req.body.isFeatured,
-      },
-      { new: true } // Return the updated document
-    );
+// Update an existing product by ID
+router.put(
+  "/:id",
+  upload.array("images", 5),
+  validateProductData,
+  updateProduct
+); // Limit to 5 images
 
-    if (!updatedProduct) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Product not found" });
-    }
-    res.status(200).json(updatedProduct);
-  } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
-  }
-});
-
-// Delete a product
-router.delete(`/:id`, async (req, res) => {
-  try {
-    const deletedProduct = await Product.findByIdAndDelete(req.params.id); // Delete from MongoDB
-    if (!deletedProduct) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Product not found" });
-    }
-    res
-      .status(200)
-      .json({ success: true, message: "The product has been deleted" });
-  } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
-  }
-});
+// Delete a product by its ID
+router.delete("/:id", deleteProduct);
 
 module.exports = router;

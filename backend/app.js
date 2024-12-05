@@ -17,9 +17,8 @@ const api = process.env.API_URL || "/api";
 
 // Middleware
 app.use(cors());
-app.options("*", cors());
 app.use(express.json());
-app.use(morgan("tiny"));
+app.use(morgan("tiny")); // Consider switching to "combined" in production
 
 // Routers
 app.use(`${api}/categories`, categoryRouter);
@@ -33,6 +32,12 @@ app.use(`${api}/collections`, collectionRouter);
 
 app.get("/", (req, res) => {
   res.send("API is running...");
+});
+
+// Error handling middleware (optional but recommended)
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ message: "Something went wrong!" });
 });
 
 module.exports = app;

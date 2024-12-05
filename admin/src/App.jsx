@@ -8,9 +8,10 @@ import { Toaster } from "react-hot-toast";
 import Banner from "./pages/banners/Banner";
 import Categories from "./pages/categories/Categories";
 import Products from "./pages/products/Products";
-import AddProductPage from "./pages/products/AddProductPage";
+import AddProductPage from "./pages/products/ProductList";
 import Brands from "./pages/brands/Brands";
 import Admin from "./pages/admins/Admin";
+import ProductUploadForm from "./pages/test";
 
 const App = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -67,6 +68,7 @@ const App = () => {
             <Route path="/categories" element={<Categories />} />
             <Route path="/add-product" element={<AddProductPage />} />
             <Route path="/admins" element={<Admin />} />
+            <Route path="/test" element={<ProductUploadForm />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
