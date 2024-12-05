@@ -1,5 +1,7 @@
 import React from "react";
 import toast from "react-hot-toast";
+import ReactQuill from "react-quill";
+import 'react-quill/dist/quill.snow.css'; // Import Quill styles
 
 const ProductForm = ({
   isEditMode,
@@ -12,8 +14,8 @@ const ProductForm = ({
   setImagePreviews,
   handleCreateProduct,
   handleUpdateProduct,
-  brands,  // List of available brands
-  categories,  // List of available categories
+  brands, // List of available brands
+  categories, // List of available categories
 }) => {
   const handleFileChange = (e) => {
     const files = e.target.files;
@@ -28,7 +30,7 @@ const ProductForm = ({
     const formData = new FormData();
     formData.append("name", newProduct.name);
     formData.append("description", newProduct.description);
-    formData.append("richDescription", newProduct.richDescription);
+    formData.append("richDescription", newProduct.richDescription);  // Rich description from Quill
     formData.append("brand", newProduct.brand);
     formData.append("price", newProduct.price);
     formData.append("category", newProduct.category);
@@ -39,7 +41,6 @@ const ProductForm = ({
 
     if (isEditMode) {
       await handleUpdateProduct(newProduct._id, formData);
-      toast.success("Product updated successfully!");
       setIsEditMode(false);
     } else {
       await handleCreateProduct(formData);
@@ -69,14 +70,16 @@ const ProductForm = ({
           onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
           className="p-4 border border-gray-300 w-full focus:ring-2 focus:ring-blue-500"
         />
-        <input
-          type="text"
-          placeholder="Rich Description"
-          value={newProduct.richDescription}
-          onChange={(e) => setNewProduct({ ...newProduct, richDescription: e.target.value })}
-          className="p-4 border border-gray-300 w-full focus:ring-2 focus:ring-blue-500"
-        />
         
+        {/* ReactQuill for Rich Description */}
+        <label>Rich Description</label>
+        <ReactQuill
+          value={newProduct.richDescription}
+          onChange={(value) => setNewProduct({ ...newProduct, richDescription: value })}
+          className="w-full"
+          theme="snow"
+        />
+
         {/* Dropdown for Brands */}
         <select
           value={newProduct.brand}
