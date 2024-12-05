@@ -34,14 +34,27 @@
 
 ## Environment Variables
 
-Create a `.env` file with the following content:
+Create a `.env` file with the following content :
+
+    in backend folder 
+```
+API_URL = /api/v1
+CONNECTION_STRING = ""
+CLOUDINARY_CLOUD_NAME=""
+CLOUDINARY_API_KEY=""
+CLOUDINARY_API_SECRET="
+```
+
+
+in admin folder 
 
 ```
-API_URL=/api/v1
-CONNECTION_STRING=""
+VITE_API_BASE_URL=http://localhost:3000/api/v1
 ```
 
 ## Contribution
 
 This project is under active development. Contributions are welcome! Please feel free to collaborate and contribute to this open-source project.
+
+
 
