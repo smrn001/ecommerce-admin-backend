@@ -10,7 +10,7 @@ import Products from "./pages/products/Products";
 import Brands from "./pages/brands/Brands";
 import Admin from "./pages/admins/Admin";
 import Home from "./pages/home/Home";
-import User from "./pages/users/user";
+import User from "./pages/users/User";
 
 const App = () => {
   const [isOpen, setIsOpen] = useState(false);
