@@ -1,5 +1,4 @@
-import React from "react";
-import toast from "react-hot-toast";
+import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css'; // Import Quill styles
 
@@ -14,9 +13,11 @@ const ProductForm = ({
   setImagePreviews,
   handleCreateProduct,
   handleUpdateProduct,
-  brands, // List of available brands
-  categories, // List of available categories
+  brands,
+  categories,
 }) => {
+  const [charCount, setCharCount] = useState(0);
+
   const handleFileChange = (e) => {
     const files = e.target.files;
     setImageFiles(files);
@@ -50,6 +51,22 @@ const ProductForm = ({
     setImagePreviews([]);
   };
 
+  const modules = {
+    toolbar: [
+      [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      ['bold', 'italic', 'underline', 'strike'],
+      ['link', 'image'],
+      [{ 'align': [] }],
+      ['clean'],
+    ],
+  };
+
+  const handleEditorChange = (value) => {
+    setNewProduct({ ...newProduct, richDescription: value });
+    setCharCount(value.length);
+  };
+
   return (
     <div className="bg-white p-6 border w-full md:w-1/3 h-min flex flex-col justify-center items-center">
       <h2 className="text-2xl font-semibold mb-4 text-gray-800">
@@ -75,10 +92,12 @@ const ProductForm = ({
         <label>Rich Description</label>
         <ReactQuill
           value={newProduct.richDescription}
-          onChange={(value) => setNewProduct({ ...newProduct, richDescription: value })}
+          onChange={handleEditorChange}
           className="w-full"
           theme="snow"
+          modules={modules}
         />
+        <p className="text-right text-sm text-gray-500">{charCount} characters</p>
 
         {/* Dropdown for Brands */}
         <select
