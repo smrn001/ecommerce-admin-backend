@@ -9,14 +9,12 @@ const brandSchema = mongoose.Schema({
     type: String,
     required: [true, "Brand image is required"],
   },
-  description: {
+   description: {
     type: String,
-    default: "", // Optional field to describe the brand
+    required: [true, "Brand description is required"],
+
   },
-  isActive: {
-    type: Boolean,
-    default: true, // Indicates if the brand is active or inactive
-  },
+
   dateCreated: {
     type: Date,
     default: Date.now,

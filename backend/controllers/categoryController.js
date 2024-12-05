@@ -26,7 +26,7 @@ const deleteFromCloudinary = async (imageUrl) => {
 };
 
 // Validation helper function
-const validateCategoryData = (name, link, isActive) => {
+const validateCategoryData = (name, ) => {
   if (!name ) {
     return "All fields are required";
   }
