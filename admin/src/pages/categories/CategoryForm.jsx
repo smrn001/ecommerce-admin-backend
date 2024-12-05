@@ -69,7 +69,7 @@ const CategoryForm = ({
             <img
               src={imagePreview}
               alt="Preview"
-              className="w-60 h-20 object-cover "
+              className="w-[80px] h-[80px] object-cover "
             />
           </div>
         )}

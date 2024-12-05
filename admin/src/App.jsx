@@ -2,13 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import Header from "./components/Header";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
-import Products from "./pages/Products";
 import Sidebar from "./components/Sidebar";
 import NotFound from "./pages/NotFound";
-import AddProductPage from "./pages/AddProductPage";
 import { Toaster } from "react-hot-toast";
 import Banner from "./pages/banners/Banner";
 import Categories from "./pages/categories/Categories";
+import Products from "./pages/products/Products";
+import AddProductPage from "./pages/products/AddProductPage";
 
 const App = () => {
   const [isOpen, setIsOpen] = useState(false);

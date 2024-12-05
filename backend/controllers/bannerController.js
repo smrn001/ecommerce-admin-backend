@@ -5,11 +5,14 @@ const stream = require("stream");
 // Helper function to handle Cloudinary uploads
 const uploadToCloudinary = (fileBuffer, folder = "banners") => {
   return new Promise((resolve, reject) => {
-    const uploadStream = cloudinary.uploader.upload_stream({ folder }, (error, result) => {
-      if (error) return reject(error);
-      resolve(result);
-    });
-    
+    const uploadStream = cloudinary.uploader.upload_stream(
+      { folder },
+      (error, result) => {
+        if (error) return reject(error);
+        resolve(result);
+      }
+    );
+
     const bufferStream = new stream.PassThrough();
     bufferStream.end(fileBuffer);
     bufferStream.pipe(uploadStream);
@@ -18,7 +21,7 @@ const uploadToCloudinary = (fileBuffer, folder = "banners") => {
 
 // Helper function to delete image from Cloudinary
 const deleteFromCloudinary = async (imageUrl) => {
-  const imagePublicId = imageUrl.split('/').pop().split('.')[0];
+  const imagePublicId = imageUrl.split("/").pop().split(".")[0];
   return cloudinary.uploader.destroy(imagePublicId);
 };
 
@@ -35,10 +38,13 @@ const createBanner = async (req, res) => {
   try {
     const { name, link, isActive } = req.body;
     const validationError = validateBannerData(name, link, isActive);
-    if (validationError) return res.status(400).json({ success: false, message: validationError });
+    if (validationError)
+      return res.status(400).json({ success: false, message: validationError });
 
     if (!req.file) {
-      return res.status(400).json({ success: false, message: "Image is required" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Image is required" });
     }
 
     const result = await uploadToCloudinary(req.file.buffer);
@@ -75,14 +81,18 @@ const updateBanner = async (req, res) => {
     const { id } = req.params;
     const { name, link, isActive } = req.body;
     const validationError = validateBannerData(name, link, isActive);
-    if (validationError) return res.status(400).json({ success: false, message: validationError });
+    if (validationError)
+      return res.status(400).json({ success: false, message: validationError });
 
     const banner = await Banner.findById(id);
-    if (!banner) return res.status(404).json({ success: false, message: "Banner not found" });
+    if (!banner)
+      return res
+        .status(404)
+        .json({ success: false, message: "Banner not found" });
 
     if (req.file) {
       if (banner.image) await deleteFromCloudinary(banner.image);
-      
+
       const result = await uploadToCloudinary(req.file.buffer);
       banner.image = result.secure_url;
     }
@@ -104,15 +114,26 @@ const deleteBanner = async (req, res) => {
   try {
     const { id } = req.params;
     const banner = await Banner.findById(id);
-    if (!banner) return res.status(404).json({ success: false, message: "Banner not found" });
+    if (!banner)
+      return res
+        .status(404)
+        .json({ success: false, message: "Banner not found" });
 
     await deleteFromCloudinary(banner.image);
     await Banner.findByIdAndDelete(id);
 
-    res.status(200).json({ success: true, message: "Banner deleted successfully" });
+    res
+      .status(200)
+      .json({ success: true, message: "Banner deleted successfully" });
   } catch (err) {
     console.error("Error deleting banner:", err);
-    res.status(500).json({ success: false, message: "Error deleting banner", error: err.message });
+    res
+      .status(500)
+      .json({
+        success: false,
+        message: "Error deleting banner",
+        error: err.message,
+      });
   }
 };
 

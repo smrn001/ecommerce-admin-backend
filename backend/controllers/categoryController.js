@@ -1,6 +1,5 @@
 const cloudinary = require("../config/cloudinary");
 const Category = require("../models/category");
-const category = require("../models/category");
 const stream = require("stream");
 
 // Helper function to handle Cloudinary uploads
@@ -28,7 +27,7 @@ const deleteFromCloudinary = async (imageUrl) => {
 
 // Validation helper function
 const validateCategoryData = (name, link, isActive) => {
-  if (!name || !link || typeof isActive === "undefined") {
+  if (!name ) {
     return "All fields are required";
   }
   return null;
@@ -37,8 +36,8 @@ const validateCategoryData = (name, link, isActive) => {
 // Controller for creating a category
 const createCategory = async (req, res) => {
   try {
-    const { name, link, isActive } = req.body;
-    const validationError = validateCategoryData(name, link, isActive);
+    const { name } = req.body;
+    const validationError = validateCategoryData(name);
     if (validationError)
       return res.status(400).json({ success: false, message: validationError });
 
@@ -67,10 +66,10 @@ const createCategory = async (req, res) => {
 const getCategoryById = async (req, res) => {
   try {
     const { id } = req.params;
-    
+
     // Find the category by its ID
     const category = await Category.findById(id);
-    
+
     if (!category) {
       return res.status(404).json({
         success: false,
@@ -89,9 +88,6 @@ const getCategoryById = async (req, res) => {
     });
   }
 };
-
-
-
 
 // Controller for getting all     const newCategory = new Category({
 

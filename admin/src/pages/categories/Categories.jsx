@@ -11,8 +11,6 @@ const Categories = () => {
     error,
     newCategory,
     setNewCategory,
-    imageFile,
-    setImageFile,
     handleCreateCategory,
     handleUpdateCategory,
     handleDeleteCategory,
@@ -20,13 +18,14 @@ const Categories = () => {
 
   const [imagePreview, setImagePreview] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
+
 
   const handleEditCategory = (category) => {
     setNewCategory({
       // Fixed to use setNewCategory
       _id: category._id,
       name: category.name,
-      image: category.image, // Added image field for consistency
     });
     setImageFile(null);
     setIsEditMode(true);
