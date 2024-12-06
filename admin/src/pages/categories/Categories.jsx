@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Toaster } from "react-hot-toast";
 import useCategories from "../../hooks/useCategories"; // Corrected hook call
 import CategoryForm from "./CategoryForm";
 import CategoryList from "./CategoryList";
@@ -40,7 +39,6 @@ const Categories = () => {
 
   return (
     <div className="container mx-auto p-6 max-w-screen-xl">
-      <Toaster />
       <h1 className="text-4xl font-semibold text-center mb-8 text-black">
         Category Management {/* Updated heading */}
       </h1>

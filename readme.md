@@ -34,20 +34,20 @@
 
 ## Environment Variables
 
-Create a `.env` file with the following content :
+Create a `.env` file with the following content:
 
-in backend folder 
+### In backend folder
+
 ```
-API_URL = /api/v1
-CONNECTION_STRING = ""
+API_URL=/api/v1
+CONNECTION_STRING=""
 CLOUDINARY_CLOUD_NAME=""
 CLOUDINARY_API_KEY=""
-CLOUDINARY_API_SECRET="
+CLOUDINARY_API_SECRET=""
 JWT_SECRET=your_secret_key_here
 ```
 
-
-in admin folder 
+### In admin folder
 
 ```
 VITE_API_BASE_URL=http://localhost:3000/api/v1
@@ -57,5 +57,13 @@ VITE_API_BASE_URL=http://localhost:3000/api/v1
 
 This project is under active development. Contributions are welcome! Please feel free to collaborate and contribute to this open-source project.
 
+## Screenshots
 
+![Product Management](admin/public/productManagement.png)
+![Banner Management](admin/public/bannerManagement.png)
+![User Management](admin/public/userManagement.png)
+![Categories Management](admin/public/categoryManagement.png)
+![Brand Management](admin/public/brandManagement.png)
+![Login Form](admin/public/loginForm.png)
+![Signup Form](admin/public/signupForm.png)
 

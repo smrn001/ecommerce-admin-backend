@@ -28,11 +28,9 @@ const CategoryForm = ({
     try {
       if (isEditMode) {
         await handleUpdateCategory(newCategory._id, formData); // Corrected to newCategory
-        toast.success("Category updated successfully!"); // Success toast
         setIsEditMode(false);
       } else {
         await handleCreateCategory(formData);
-        toast.success("Category created successfully!"); // Success toast
       }
 
       // Clear form after submission
