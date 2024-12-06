@@ -28,7 +28,7 @@ const UserList = ({ users, onEdit, onDelete }) => (
               key={user._id}
               className="hover:bg-gray-50 transition-all duration-200 ease-in-out"
             >
-              <td className="border-b px-4 py-2 text-sm text-gray-800 text-center">
+              <td className="border-b px-4 py-2 text-sm text-gray-800 text-center whitespace-nowrap">
                 {user.name}
               </td>
               <td className="border-b px-4 py-2 text-sm text-gray-800 text-center">
