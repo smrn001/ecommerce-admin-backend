@@ -39,7 +39,7 @@ const ProductList = ({ products, onEdit, onDelete }) => (
                 <img
                   src={product.images[0]}
                   alt={product.name}
-                  className="w-12 h-12  object-contain rounded-sm "
+                  className="w-10 h-10  object-contain rounded-sm "
                 />
               </td>
               <td className="border-b px-4 py-2 text-sm text-gray-800 text-center">
