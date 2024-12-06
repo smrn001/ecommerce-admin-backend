@@ -25,14 +25,14 @@ const BannerList = ({ banners, onEdit, onDelete }) => (
         <tbody>
           {banners.map((banner) => (
             <tr key={banner._id} className="hover:bg-gray-50">
-              <td className="border-b px-4 py-2 text-sm text-gray-800">
+              <td className="border-b px-4 py-2 text-sm text-gray-800 text-center">
                 {banner.name}
               </td>
               <td className="border-b px-4 py-2">
                 <img
                   src={banner.image}
                   alt={banner.name}
-                  className="w-full max-w-[200px]  h-auto object-cover rounded-sm shadow-sm"
+                  className="w-full max-w-[150px]  h-auto object-cover rounded-sm shadow-sm"
                 />
               </td>
               <td className="border-b px-4 py-2 text-sm text-gray-800">
