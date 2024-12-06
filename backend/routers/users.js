@@ -3,9 +3,10 @@ const router = express.Router();
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 // Fetch all users
-router.get(`/`, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const users = await User.find(); // Fetch all users from MongoDB
     res.status(200).json(users);
@@ -15,9 +16,9 @@ router.get(`/`, async (req, res) => {
 });
 
 // Fetch a single user by ID
-router.get(`/:id`, async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
-    const user = await User.findById(req.params.id); // Fetch user by ID
+    const user = await User.findById(req.params.id);
     if (!user) {
       return res
         .status(404)
@@ -29,37 +30,41 @@ router.get(`/:id`, async (req, res) => {
   }
 });
 
-// Add a new user (registration)
-router.post(`/`, async (req, res) => {
+// Register a new user
+router.post("/", async (req, res) => {
   try {
-    const { name, email, password, isAdmin } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10); // Hash password
+    const { name, email, password, role = "user" } = req.body;
+
+    // Check if the user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User already exists" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
 
     const newUser = new User({
       name,
       email,
       password: hashedPassword,
-      isAdmin: isAdmin || false, // Default to false if not provided
+      role, // Default role is 'user', but can also be 'admin'
     });
 
-    const savedUser = await newUser.save(); // Save new user to MongoDB
-    res.status(201).json(savedUser);
+    const savedUser = await newUser.save();
+    res.status(201).json({ success: true, user: savedUser });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
 });
 
-// Update an existing user
-router.put(`/:id`, async (req, res) => {
+// Update user details
+router.put("/:id", async (req, res) => {
   try {
-    const { name, email, password, isAdmin } = req.body;
+    const { name, email, password, role } = req.body;
 
-    // Hash password if provided
-    const updatedData = {
-      name,
-      email,
-      isAdmin: isAdmin || false,
-    };
+    const updatedData = { name, email, role };
 
     if (password) {
       updatedData.password = await bcrypt.hash(password, 10);
@@ -69,7 +74,7 @@ router.put(`/:id`, async (req, res) => {
       req.params.id,
       updatedData,
       {
-        new: true, // Return the updated document
+        new: true,
       }
     );
 
@@ -79,16 +84,16 @@ router.put(`/:id`, async (req, res) => {
         .json({ success: false, message: "User not found" });
     }
 
-    res.status(200).json(updatedUser);
+    res.status(200).json({ success: true, user: updatedUser });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
 });
 
 // Delete a user
-router.delete(`/:id`, async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
-    const deletedUser = await User.findByIdAndDelete(req.params.id); // Delete user by ID
+    const deletedUser = await User.findByIdAndDelete(req.params.id);
     if (!deletedUser) {
       return res
         .status(404)
@@ -100,38 +105,55 @@ router.delete(`/:id`, async (req, res) => {
   }
 });
 
-// Login (Generate JWT token)
-router.post(`/login`, async (req, res) => {
+// Login and authenticate a user
+router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email }); // Find user by email
 
+    const user = await User.findOne({ email });
     if (!user) {
       return res
         .status(404)
         .json({ success: false, message: "User not found" });
     }
 
-    const isMatch = await bcrypt.compare(password, user.password); // Check password
-
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res
         .status(400)
         .json({ success: false, message: "Invalid credentials" });
     }
 
-    // Generate JWT token
+    // Generate a JWT token
     const token = jwt.sign(
-      { userId: user._id, isAdmin: user.isAdmin },
+      { userId: user._id, role: user.role },
       process.env.JWT_SECRET,
-      {
-        expiresIn: "1h", // Token expires in 1 hour
-      }
+      { expiresIn: "1h" }
     );
 
-    res.status(200).json({ success: true, token });
+    res.status(200).json({ success: true, token, role: user.role });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// Admin-protected route (example)
+router.get("/admin/protected", async (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+
+  if (!token) {
+    return res.status(401).json({ success: false, message: "Unauthorized" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    if (decoded.role !== "admin") {
+      return res.status(403).json({ success: false, message: "Access denied" });
+    }
+
+    res.status(200).json({ success: true, message: "Welcome, admin!" });
+  } catch (err) {
+    res.status(401).json({ success: false, message: "Invalid token" });
   }
 });
 

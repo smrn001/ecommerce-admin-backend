@@ -36,13 +36,14 @@
 
 Create a `.env` file with the following content :
 
-    in backend folder 
+in backend folder 
 ```
 API_URL = /api/v1
 CONNECTION_STRING = ""
 CLOUDINARY_CLOUD_NAME=""
 CLOUDINARY_API_KEY=""
 CLOUDINARY_API_SECRET="
+JWT_SECRET=your_secret_key_here
 ```
 
 
