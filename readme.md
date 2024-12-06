@@ -62,8 +62,8 @@ This project is under active development. Contributions are welcome! Please feel
 ![Product Management](admin/public/productManagement.png)
 ![Banner Management](admin/public/bannerManagement.png)
 ![User Management](admin/public/userManagement.png)
-![Categories Management](admin/public/categoryManagement.png)
-![Brand Management](admin/public/brandManagement.png)
+![Categories Management](admin/public/categoryManagment.png)
+![Brand Management](admin/public/brandManagment.png)
 ![Login Form](admin/public/loginForm.png)
 ![Signup Form](admin/public/signupForm.png)
 
