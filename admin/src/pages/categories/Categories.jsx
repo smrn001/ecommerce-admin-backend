@@ -38,7 +38,7 @@ const Categories = () => {
   };
 
   return (
-    <div className="container mx-auto p-6 max-w-screen-xl">
+    <div className="container mx-auto p-6 max-w-7xl">
       <h1 className="text-4xl font-semibold text-center mb-8 text-black">
         Category Management {/* Updated heading */}
       </h1>

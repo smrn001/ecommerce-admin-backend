@@ -47,7 +47,7 @@ const Product = () => {
   };
 
   return (
-    <div className="container mx-auto p-6 max-w-screen-xl">
+    <div className="container mx-auto p-6 max-w-7xl">
       <Toaster />
       <h1 className="text-4xl font-semibold text-center mb-8 text-black">
         Product Management

@@ -21,7 +21,7 @@ const UserForm = ({
   return (
     <form
       onSubmit={handleSubmit}
-      className="p-6 bg-white srounded-sm border h-min w-full max-w-lg"
+      className="p-6 bg-white srounded-sm border h-min md:w-1/3 w-full max-w-lg"
     >
       <h2 className="text-2xl font-semibold mb-4">
         {isEditMode ? "Edit User" : "Add New User"}
