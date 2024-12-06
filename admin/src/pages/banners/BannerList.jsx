@@ -39,7 +39,7 @@ const BannerList = ({ banners, onEdit, onDelete }) => (
                 {banner.isActive ? "Yes" : "No"}
               </td>
               <td className="border-b px-4 py-3">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-around gap-2">
                   <button
                     onClick={() => onEdit(banner)}
                     className="bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full p-1"

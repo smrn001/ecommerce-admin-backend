@@ -29,7 +29,7 @@ const BrandList = ({ brands, onEdit, onDelete }) => (
               key={brand._id}
               className="hover:bg-gray-50 transition-all duration-200 ease-in-out"
             >
-              <td className="border-b px-4 py-2 text-sm text-gray-800">
+              <td className="border-b px-4 py-2 text-sm text-gray-800 text-center">
                 {brand.name}
               </td>
               <td className="border-b px-4 py-2 text-sm text-gray-800 text-center">
@@ -39,7 +39,7 @@ const BrandList = ({ brands, onEdit, onDelete }) => (
                 <img
                   src={brand.image}
                   alt={brand.name}
-                  className="w-[80px] h-[80px] object-cover rounded-sm shadow-sm"
+                  className="w-[80px] h-[80px] object-contain rounded-sm "
                 />
               </td>
 

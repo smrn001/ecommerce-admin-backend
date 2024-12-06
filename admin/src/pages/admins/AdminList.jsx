@@ -32,11 +32,11 @@ const AdminList = ({ admins, onEdit, onDelete }) => (
                 <img
                   src={admin.image}
                   alt={admin.name}
-                  className="h-16 w-16  rounded-md  object-cover  shadow-sm"
+                  className="h-16 w-16  rounded-sm  object-contain  shadow-sm"
                 />
               </td>
               <td className="border-b px-4 py-2 text-sm text-gray-800 text-center">
-                {admin.email }
+                {admin.email}
               </td>
               <td className="border-b px-4 py-3 ">
                 <div className="flex items-center justify-around gap-2">

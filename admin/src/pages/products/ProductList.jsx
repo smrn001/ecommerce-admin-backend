@@ -8,19 +8,19 @@ const ProductList = ({ products, onEdit, onDelete }) => (
       <table className="w-full border-separate border-spacing-y-2">
         <thead>
           <tr className="bg-gray-100">
-            <th className="border-b px-4 py-2 text-sm font-medium text-gray-600">
+            <th className="border-b px-4 py-2 text-sm font-medium text-gray-600 text-center">
               Name
             </th>
-            <th className="border-b px-4 py-2 text-sm font-medium text-gray-600">
+            <th className="border-b px-4 py-2 text-sm font-medium text-gray-600 text-center">
               Image
             </th>
-            <th className="border-b px-4 py-2 text-sm font-medium text-gray-600">
+            <th className="border-b px-4 py-2 text-sm font-medium text-gray-600 text-center">
               Price
             </th>
-            <th className="border-b px-4 py-2 text-sm font-medium text-gray-600">
+            <th className="border-b px-4 py-2 text-sm font-medium text-gray-600 text-center">
               In Stock
             </th>
-            <th className="border-b px-4 py-2 text-sm font-medium text-gray-600">
+            <th className="border-b px-4 py-2 text-sm font-medium text-gray-600 text-center">
               Actions
             </th>
           </tr>
@@ -28,24 +28,24 @@ const ProductList = ({ products, onEdit, onDelete }) => (
         <tbody>
           {products.map((product) => (
             <tr key={product._id} className="hover:bg-gray-50">
-              <td className="border-b px-4 py-2 text-sm text-gray-800">
+              <td className="border-b px-4 py-2 text-sm text-gray-800 text-center">
                 {product.name}
               </td>
               <td className="border-b px-4 py-2">
                 <img
                   src={product.images[0]}
                   alt={product.name}
-                  className="w-full max-w-[200px] h-auto object-cover rounded-sm shadow-sm"
+                  className="w-32 h-32  object-contain rounded-sm shadow-sm"
                 />
               </td>
-              <td className="border-b px-4 py-2 text-sm text-gray-800">
+              <td className="border-b px-4 py-2 text-sm text-gray-800 text-center">
                 ${product.price}
               </td>
-              <td className="border-b px-4 py-2 text-sm text-gray-800">
+              <td className="border-b px-4 py-2 text-sm text-gray-800 text-center">
                 {product.countInStock > 0 ? "Yes" : "No"}
               </td>
-              <td className="border-b px-4 py-3">
-                <div className="flex items-center gap-2">
+              <td className="border-b px-4 py-3 ">
+                <div className="flex items-center justify-around gap-2">
                   <button
                     onClick={() => onEdit(product)}
                     className="bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full p-1"

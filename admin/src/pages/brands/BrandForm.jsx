@@ -77,7 +77,7 @@ const BrandForm = ({
             <img
               src={imagePreview}
               alt="Preview"
-              className="w-[80px] h-[80px] object-cover "
+              className="w-[80px] h-[80px] object-contain "
             />
           </div>
         )}
