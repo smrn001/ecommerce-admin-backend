@@ -5,7 +5,7 @@ const ProductList = ({ products, onEdit, onDelete }) => (
   <div className="flex-1 flex flex-col gap-5 p-5 md:px-10 border h-min bg-white">
     <h2 className="text-2xl font-semibold mb-4 text-gray-800">All Products</h2>
     <div className="overflow-x-auto">
-      <table className="w-full border-separate border-spacing-y-2">
+      <table className="w-full border-separate border-spacing-y-2 overflow-auto">
         <thead>
           <tr className="bg-gray-100">
             <th className="border-b px-4 py-2 text-sm font-medium text-gray-600 text-center">
@@ -16,6 +16,10 @@ const ProductList = ({ products, onEdit, onDelete }) => (
             </th>
             <th className="border-b px-4 py-2 text-sm font-medium text-gray-600 text-center">
               Price
+            </th>
+            <th className="border-b px-4 py-2 text-sm font-medium text-gray-600 text-center">
+            Description
+
             </th>
             <th className="border-b px-4 py-2 text-sm font-medium text-gray-600 text-center">
               In Stock
@@ -35,11 +39,14 @@ const ProductList = ({ products, onEdit, onDelete }) => (
                 <img
                   src={product.images[0]}
                   alt={product.name}
-                  className="w-32 h-32  object-contain rounded-sm shadow-sm"
+                  className="w-12 h-12  object-contain rounded-sm "
                 />
               </td>
               <td className="border-b px-4 py-2 text-sm text-gray-800 text-center">
-                ${product.price}
+              ₹{product.price}
+              </td>
+              <td className="border-b px-4 py-2 text-sm text-gray-800 text-center ">
+                {product.description}
               </td>
               <td className="border-b px-4 py-2 text-sm text-gray-800 text-center">
                 {product.countInStock > 0 ? "Yes" : "No"}

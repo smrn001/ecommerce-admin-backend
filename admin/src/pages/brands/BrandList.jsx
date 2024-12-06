@@ -39,7 +39,7 @@ const BrandList = ({ brands, onEdit, onDelete }) => (
                 <img
                   src={brand.image}
                   alt={brand.name}
-                  className="w-[80px] h-[80px] object-contain rounded-sm "
+                  className="w-10 h-10 object-contain rounded-sm "
                 />
               </td>
 

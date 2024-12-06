@@ -28,19 +28,19 @@ const CategoryList = ({ categories, onEdit, onDelete }) => (
               key={category._id}
               className="hover:bg-gray-50 transition-all duration-200 ease-in-out"
             >
-              <td className="border-b px-4 py-2 text-sm text-gray-800">
+              <td className="border-b px-4 py-2 text-sm text-gray-800 text-center">
                 {category.name}
               </td>
               <td className="border-b px-4 py-2 flex justify-center">
                 <img
                   src={category.image}
                   alt={category.name}
-                  className="w-[80px] h-[80px] object-cover rounded-sm shadow-sm"
+                  className="w-10 h-10 object-cover rounded-sm shadow-sm"
                 />
               </td>
              
               <td className="border-b px-4 py-3">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-around gap-2">
                   <button
                     onClick={() => onEdit(category)}
                     className="bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full p-2 transition-all duration-200 ease-in-out"
