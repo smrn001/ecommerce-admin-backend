@@ -31,11 +31,11 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="bg-gray-800 text-white h-screen w-[260px] flex flex-col z-40 lg:w-[18vw] lg:flex lg:flex-col">
+    <div className="bg-gray-800 text-white h-screen w-[260px] flex flex-col z-40 lg:w-[20vw] lg:flex lg:flex-col">
       {/* Header */}
       <Link
         to="/"
-        className="text-xl font-bold p-4 border-b border-gray-600 text-white tracking-wide"
+        className="text-xl font-bold p-4 h-20 border-b text-center border-gray-600 text-white tracking-wide"
       >
         Logo
       </Link>

@@ -25,6 +25,8 @@ const LoginForm = () => {
       if (response.ok) {
         if (data.role === "admin") {
           localStorage.setItem("token", data.token); // Store the token
+          localStorage.setItem("name", data.name); // Store the name
+          localStorage.setItem("email", data.email); // Store the email
           navigate("/"); // Redirect to admin dashboard
           toast.success("Login successful");
         } else {

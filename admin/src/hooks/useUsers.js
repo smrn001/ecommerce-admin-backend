@@ -12,6 +12,8 @@ const useUsers = () => {
     isAdmin: false,
   });
 
+
+  // Fetch all users
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -29,6 +31,20 @@ const useUsers = () => {
     fetchUsers();
   }, []);
 
+// get a single user by ID
+  const getUserById = async (id) => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/users/${id}`);
+      if (!response.ok) throw new Error("Error fetching user.");
+      const data = await response.json();
+      return data;
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+
+  // Create a new user
   const handleCreateUser = async () => {
     try {
       const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/users`, {
@@ -51,6 +67,7 @@ const useUsers = () => {
     }
   };
 
+  // Update an existing user
   const handleUpdateUser = async (id) => {
     try {
       const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/users/${id}`, {
@@ -72,6 +89,8 @@ const useUsers = () => {
     }
   };
 
+
+  // Delete a user
   const handleDeleteUser = async (id) => {
     try {
       const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/users/${id}`, {
@@ -96,6 +115,7 @@ const useUsers = () => {
     handleCreateUser,
     handleUpdateUser,
     handleDeleteUser,
+    getUserById,
   };
 };
 

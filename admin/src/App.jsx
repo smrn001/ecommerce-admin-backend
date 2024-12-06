@@ -21,7 +21,7 @@ import Brands from "./pages/brands/Brands";
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const sidebarRef = useRef(null);
   const navigate = useNavigate();
@@ -40,53 +40,53 @@ const App = () => {
   }, [location.pathname]);
 
   useEffect(() => {
-    const closeSidebar = handleClickOutside(sidebarRef, () => setIsOpen(false));
+    const closeSidebar = handleClickOutside(sidebarRef, () =>
+      setIsSidebarOpen(false)
+    );
     document.addEventListener("mousedown", closeSidebar);
 
     return () => document.removeEventListener("mousedown", closeSidebar);
   }, []);
 
-useEffect(() => {
-  setIsOpen(false);
- },[location.pathname]);
+  useEffect(() => {
+    setIsSidebarOpen(false);
+  }, [location.pathname]);
 
-  const toggleSidebar = () => setIsOpen((prev) => !prev);
+  const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
 
   return (
-    <div className="relative flex max-w-[1500px] mx-auto">
+    <div className="relative flex mx-auto">
       <Toaster />
 
       {/* Sidebar */}
       {!isAuthRoute && (
         <>
           {/* Desktop Sidebar */}
-          <div className="hidden md:block fixed top-0 left-0 h-full w-[260px] bg-[#162C5D] z-40">
+          <aside className="hidden md:block fixed top-0 left-0 h-full w-[20vw] z-40">
             <Sidebar />
-          </div>
+          </aside>
 
           {/* Mobile Sidebar */}
-          <div
+          <aside
             ref={sidebarRef}
-            className={`fixed md:hidden top-0 left-0 h-full w-[260px] bg-[#162C5D] z-50 transform transition-transform duration-300 ${
-              isOpen ? "translate-x-0" : "-translate-x-full"
+            className={`fixed md:hidden top-0 left-0 h-full w-[260px] z-50 bg-gray-900 transform transition-transform duration-300 ${
+              isSidebarOpen ? "translate-x-0" : "-translate-x-full"
             }`}
           >
             <Sidebar />
-          </div>
+          </aside>
         </>
       )}
 
       {/* Main Content */}
-      <div
-        className={`flex flex-1 flex-col ${
-          !isAuthRoute ? "md:ml-[260px]" : ""
-        } overflow-hidden`}
+      <main
+        className={`flex flex-1 flex-col overflow-hidden ${
+          !isAuthRoute ? "md:ml-[20vw] md:w-[80vw]" : ""
+        }`}
       >
-        {/* Header */}
         {!isAuthRoute && <Header toggleSidebar={toggleSidebar} />}
 
-        {/* Routes */}
-        <div className={`${!isAuthRoute ? "pt-14" : ""} flex-1`}>
+        <section className={`${!isAuthRoute ? "pt-20" : ""} flex-1`}>
           <Routes>
             {/* Public Routes */}
             <Route path="/login" element={<LoginForm />} />
@@ -108,8 +108,8 @@ useEffect(() => {
             {/* Fallback Route */}
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </div>
-      </div>
+        </section>
+      </main>
     </div>
   );
 };
