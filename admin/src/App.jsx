@@ -46,6 +46,10 @@ const App = () => {
     return () => document.removeEventListener("mousedown", closeSidebar);
   }, []);
 
+useEffect(() => {
+  setIsOpen(false);
+ },[location.pathname]);
+
   const toggleSidebar = () => setIsOpen((prev) => !prev);
 
   return (
